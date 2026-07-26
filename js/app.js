@@ -867,7 +867,7 @@ function loadChapter(chId) {
 
       const nextId = selectedChapter + 1;
       loadChapter(nextId);
-      playPanelAudio(nextId);
+      keepBackgroundMusicPlaying();
       scheduleNextFocusPanel();
     }, AUTO_FOCUS_PANEL_MS);
   }
@@ -879,7 +879,7 @@ function loadChapter(chId) {
     loadChapter(chId);
     document.body.classList.add('focus-active');
     setFocusHidden(document.getElementById('focusMode'), false);
-    playPanelAudio(chId);
+    keepBackgroundMusicPlaying();
     scheduleNextFocusPanel();
   }
 
@@ -890,7 +890,7 @@ function loadChapter(chId) {
     document.body.classList.remove('focus-active');
     setFocusHidden(document.getElementById('focusMode'), true);
     selectedChapter = 0;
-    stopPanelAudioAndResumeBg();
+    keepBackgroundMusicPlaying();
   }
 
   function goFocusChapter(direction, options = {}) {
@@ -903,23 +903,24 @@ function loadChapter(chId) {
     if (nextId < 1) nextId = chapters.length;
     if (nextId > chapters.length) nextId = 1;
     loadChapter(nextId);
-    playPanelAudio(nextId);
+    keepBackgroundMusicPlaying();
     scheduleNextFocusPanel();
   }
 
   function toggleFocusAudio() {
     const btn = document.getElementById('btnFocusAudio');
-    const panelAudio = document.getElementById(`panelAudio${selectedChapter}`);
-    if (!panelAudio) return;
+    const bg = document.getElementById('bgAudio');
+    if (!bg) return;
 
-    if (panelAudio.paused) {
-      panelAudio.play().catch(() => {});
+    if (bg.paused || isSoundMuted) {
+      setAllAudioMuted(false);
+      bg.play().catch(() => {});
       if (btn) {
         btn.classList.add('active');
         btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
       }
     } else {
-      panelAudio.pause();
+      setAllAudioMuted(true);
       if (btn) {
         btn.classList.remove('active');
         btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
@@ -978,7 +979,6 @@ function loadChapter(chId) {
   const { $, on } = window.VesakDom;
 
 
-  let currentPanelAudio = null;
   let isSoundMuted = false;
 
   function updateHeaderSoundButton() {
@@ -1005,68 +1005,20 @@ function loadChapter(chId) {
   function togglePageSound() {
     setAllAudioMuted(!isSoundMuted);
     if (!isSoundMuted) {
-      const audioToPlay = currentPanelAudio || $('bgAudio');
+      const audioToPlay = $('bgAudio');
       if (audioToPlay && audioToPlay.paused && isIgnited) {
         audioToPlay.play().catch(() => {});
       }
     }
   }
 
-  function playPanelAudio(panelId) {
-
-    const bg = $('bgAudio');
-    if (bg) {
-      try {
-        bg.pause();
-        bg.muted = true;
-      } catch (e) {
-        console.log('BG pause error:', e);
-      }
-    }
-
-
-    if (currentPanelAudio) {
-      try {
-        currentPanelAudio.pause();
-        currentPanelAudio.currentTime = 0;
-      } catch (e) {}
-      currentPanelAudio = null;
-    }
-
-
-    const panelAudio = $('panelAudio' + panelId);
-    if (panelAudio) {
-      panelAudio.volume = 0.85;
-      panelAudio.muted = isSoundMuted;
-      panelAudio.currentTime = 0;
-      panelAudio.play().then(() => {
-        console.log('▶ Panel ' + panelId + ' audio playing');
-      }).catch(err => {
-        console.log('Panel audio play error:', err);
-      });
-      currentPanelAudio = panelAudio;
-    } else {
-      console.log('⚠ panelAudio' + panelId + ' element not found');
-    }
-  }
-
-function stopPanelAudioAndResumeBg() {
-
-    if (currentPanelAudio) {
-      try {
-        currentPanelAudio.pause();
-        currentPanelAudio.currentTime = 0;
-      } catch (e) {}
-      currentPanelAudio = null;
-    }
-
+  function keepBackgroundMusicPlaying() {
     const bg = $('bgAudio');
     if (bg && isIgnited) {
       bg.muted = isSoundMuted;
-      bg.play().catch(err => console.log('BG resume blocked:', err));
+      bg.play().catch(() => {});
     }
   }
-
 
   function setupEvents() {
 
@@ -1160,7 +1112,7 @@ function closeSidePanel() {
       if (sidePanel) sidePanel.classList.remove('open');
       if (stage) stage.classList.remove('split-view');
       selectedChapter = 0;
-      stopPanelAudioAndResumeBg();
+      keepBackgroundMusicPlaying();
     }
 
     on($('btnCloseModal'), 'click', closeSidePanel);
@@ -1211,14 +1163,14 @@ function closeSidePanel() {
       let prevId = selectedChapter - 1;
       if (prevId < 1) prevId = 8;
       loadChapter(prevId);
-      playPanelAudio(prevId);
+      keepBackgroundMusicPlaying();
     });
 
     on($('btnNextChapter'), 'click', () => {
       let nextId = selectedChapter + 1;
       if (nextId > 8) nextId = 1;
       loadChapter(nextId);
-      playPanelAudio(nextId);
+      keepBackgroundMusicPlaying();
     });
 
     on($('btnPlayNarrative'), 'click', speakNarrative);
