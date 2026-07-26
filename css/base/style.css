@@ -3662,17 +3662,39 @@ canvas {
 
 .buddhist-flag-img,
 .srilanka-flag-img {
-  width: 58px;
-  height: 42px;
-  max-height: 42px;
-  object-fit: contain;
-  object-position: center;
-  margin: 0;
+  width: 58px !important;
+  height: 42px !important;
+  max-height: 42px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 !important;
 }
 
 .status-badge {
   padding: 6px 12px;
   font-size: 11px;
+}
+
+.header-sound-btn {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(248, 208, 96, 0.4);
+  background: rgba(20, 12, 35, 0.68);
+  color: #ffe27a;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(248, 208, 96, 0.14);
+}
+
+.header-sound-btn:hover {
+  background: rgba(248, 208, 96, 0.14);
+}
+
+.header-sound-btn.muted {
+  color: #ff8a8a;
+  border-color: rgba(255, 100, 100, 0.45);
 }
 
 .main-grid,
@@ -3904,7 +3926,7 @@ canvas {
 .thorana-display-row {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(180px, 250px) minmax(0, 760px) minmax(180px, 250px);
+  grid-template-columns: minmax(180px, 250px) minmax(0, 660px) minmax(180px, 250px);
   justify-content: center;
   align-items: center;
   gap: clamp(18px, 3vw, 34px);
@@ -3916,7 +3938,7 @@ canvas {
 
 .thorana-canvas-stack {
   position: relative;
-  width: min(100%, 760px);
+  width: min(100%, 660px);
   grid-column: 2;
   justify-self: center;
 }
