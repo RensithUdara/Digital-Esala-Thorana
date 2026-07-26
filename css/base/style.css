@@ -3885,3 +3885,124 @@ canvas {
     text-align: right;
   }
 }
+
+/* Right-side controls beside the thorana. */
+.main-grid.fullscreen .display-card,
+.display-card {
+  width: min(100%, 1120px);
+  max-width: 1120px;
+}
+
+.canvas-wrapper {
+  width: min(100%, 1120px);
+}
+
+.thorana-display-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(18px, 3vw, 34px);
+}
+
+.thorana-canvas-stack {
+  position: relative;
+  width: min(72vw, 760px);
+  flex: 0 1 760px;
+}
+
+.thorana-canvas-stack canvas {
+  width: 100%;
+}
+
+.thorana-side-panel {
+  width: min(250px, 24vw);
+  flex: 0 0 min(250px, 24vw);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  align-self: stretch;
+  padding: 14px 0;
+}
+
+.thorana-side-panel .lit-lamps-area {
+  width: 100%;
+  max-width: none;
+  min-height: 74px;
+  margin: 0;
+  padding: 8px;
+  justify-content: center;
+  align-content: center;
+  border-radius: 18px;
+  background: rgba(4, 6, 14, 0.34);
+}
+
+.thorana-side-panel .canvas-status-bar {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 18px;
+}
+
+.thorana-side-panel .canvas-status-bar > span,
+.thorana-side-panel .canvas-status-bar button {
+  width: 100%;
+  justify-content: center;
+}
+
+.thorana-side-panel .canvas-status-bar > span {
+  min-height: 28px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.thorana-side-panel .btn-wishes-wall,
+.thorana-side-panel .btn-light-lamp {
+  min-height: 36px;
+}
+
+.vesak-footer {
+  width: min(100%, 1120px) !important;
+  max-width: 1120px !important;
+}
+
+@media (max-width: 980px) {
+  .thorana-display-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .thorana-canvas-stack {
+    width: min(100%, 760px);
+    flex-basis: auto;
+  }
+
+  .thorana-side-panel {
+    width: min(100%, 760px);
+    flex: 0 1 auto;
+    align-self: center;
+    padding: 0;
+  }
+
+  .thorana-side-panel .lit-lamps-area {
+    min-height: 44px;
+  }
+
+  .thorana-side-panel .canvas-status-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 18px;
+  }
+
+  .thorana-side-panel .canvas-status-bar > span,
+  .thorana-side-panel .canvas-status-bar button {
+    width: auto;
+  }
+}
