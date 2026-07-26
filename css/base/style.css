@@ -3915,18 +3915,18 @@ canvas {
 /* Right-side controls beside the thorana. */
 .main-grid.fullscreen .display-card,
 .display-card {
-  width: min(100%, 1120px);
-  max-width: 1120px;
+  width: min(100%, 1460px);
+  max-width: 1460px;
 }
 
 .canvas-wrapper {
-  width: min(100%, 1120px);
+  width: min(100%, 1460px);
 }
 
 .thorana-display-row {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(180px, 250px) minmax(0, 660px) minmax(180px, 250px);
+  grid-template-columns: minmax(180px, 250px) minmax(0, 990px) minmax(180px, 250px);
   justify-content: center;
   align-items: center;
   gap: clamp(18px, 3vw, 34px);
@@ -3938,7 +3938,7 @@ canvas {
 
 .thorana-canvas-stack {
   position: relative;
-  width: min(100%, 660px);
+  width: min(100%, 990px);
   grid-column: 2;
   justify-self: center;
 }
@@ -3953,10 +3953,11 @@ canvas {
   justify-self: start;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
-  align-self: stretch;
-  padding: 14px 0;
+  align-self: start;
+  padding: 0;
+  margin-top: 12px;
 }
 
 .thorana-side-panel .lit-lamps-area {
