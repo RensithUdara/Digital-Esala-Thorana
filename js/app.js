@@ -979,6 +979,38 @@ function loadChapter(chId) {
 
 
   let currentPanelAudio = null;
+  let isSoundMuted = false;
+
+  function updateHeaderSoundButton() {
+    const btn = $('btnHeaderSound');
+    if (!btn) return;
+    btn.classList.toggle('muted', isSoundMuted);
+    btn.title = isSoundMuted ? 'ශබ්දය සක්‍රිය කරන්න' : 'ශබ්දය අක්‍රිය කරන්න';
+    btn.innerHTML = isSoundMuted
+      ? '<i class="fa-solid fa-volume-xmark"></i>'
+      : '<i class="fa-solid fa-volume-high"></i>';
+  }
+
+  function setAllAudioMuted(muted) {
+    isSoundMuted = muted;
+    document.querySelectorAll('audio').forEach(audio => {
+      audio.muted = muted;
+    });
+
+    const st = $('lblAudioStatus');
+    if (st) st.textContent = muted ? 'නිශ්ශබ්දයි' : 'වාදනය වෙයි';
+    updateHeaderSoundButton();
+  }
+
+  function togglePageSound() {
+    setAllAudioMuted(!isSoundMuted);
+    if (!isSoundMuted) {
+      const audioToPlay = currentPanelAudio || $('bgAudio');
+      if (audioToPlay && audioToPlay.paused && isIgnited) {
+        audioToPlay.play().catch(() => {});
+      }
+    }
+  }
 
   function playPanelAudio(panelId) {
 
@@ -1005,7 +1037,7 @@ function loadChapter(chId) {
     const panelAudio = $('panelAudio' + panelId);
     if (panelAudio) {
       panelAudio.volume = 0.85;
-      panelAudio.muted = false;
+      panelAudio.muted = isSoundMuted;
       panelAudio.currentTime = 0;
       panelAudio.play().then(() => {
         console.log('▶ Panel ' + panelId + ' audio playing');
@@ -1030,7 +1062,7 @@ function stopPanelAudioAndResumeBg() {
 
     const bg = $('bgAudio');
     if (bg && isIgnited) {
-      bg.muted = false;
+      bg.muted = isSoundMuted;
       bg.play().catch(err => console.log('BG resume blocked:', err));
     }
   }
@@ -1066,11 +1098,11 @@ function stopPanelAudioAndResumeBg() {
         bg.volume = 0.7;
         bg.play().then(() => {
           const st = $('lblAudioStatus');
-          if (st) st.textContent = 'Playing';
+          if (st) st.textContent = 'වාදනය වෙයි';
         }).catch(err => {
           console.log('Audio autoplay blocked:', err);
           const st = $('lblAudioStatus');
-          if (st) st.textContent = 'Click anywhere';
+          if (st) st.textContent = 'තිරය මත ක්ලික් කරන්න';
         });
       }
 
@@ -1087,7 +1119,7 @@ function stopPanelAudioAndResumeBg() {
       if (bg && bg.paused && isIgnited) {
         bg.play().then(() => {
           const st = $('lblAudioStatus');
-          if (st) st.textContent = 'Playing';
+          if (st) st.textContent = 'වාදනය වෙයි';
         }).catch(() => {});
       }
     }, { once: false });
@@ -1141,6 +1173,7 @@ function closeSidePanel() {
     on($('btnFocusPrev'), 'click', () => goFocusChapter(-1));
     on($('btnFocusNext'), 'click', () => goFocusChapter(1));
     on($('btnFocusAudio'), 'click', toggleFocusAudio);
+    on($('btnHeaderSound'), 'click', togglePageSound);
     on($('btnFocusFullscreen'), 'click', toggleFocusFullscreen);
     on($('btnFocusComments'), 'click', () => {
       const suggestionsBtn = $('btnOpenSuggestions');
