@@ -433,8 +433,7 @@
     if (frameStart - lastRenderTime < TARGET_FRAME_MS) return;
     lastRenderTime = frameStart;
 
-    ctx.fillStyle = '#010103';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
 
     let panelRadius = 285;
