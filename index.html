@@ -115,16 +115,20 @@
               </div>
               <div class="notice-arrow">👇</div>
             </div>
-            <canvas id="thoranaCanvas" width="950" height="1100"></canvas>
+            <div class="thorana-display-row">
+              <div class="thorana-canvas-stack">
+                <canvas id="thoranaCanvas" width="950" height="1100"></canvas>
 
             <div id="visitorsLayer" class="visitors-layer"></div>
 
 
+            <div id="wishesLayer" class="wishes-layer"></div>
 
+              </div>
+
+              <aside class="thorana-side-panel">
             <div id="litLampsArea" class="lit-lamps-area"></div>
 
-
-            <div id="wishesLayer" class="wishes-layer"></div>
 
             <div class="canvas-status-bar">
               <span><i class="fa-solid fa-circle-nodes"></i> Pattern: <strong id="lblActivePattern">Budhu
@@ -158,6 +162,8 @@
                   <span id="lblLampCount">0</span>
                 </span>
               </button>
+            </div>
+              </aside>
             </div>
           </div>
         </section>
