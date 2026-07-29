@@ -63,9 +63,9 @@ node_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 
 # dataconnect generated files
 .dataconnect
 
 .vercel
+config.bat

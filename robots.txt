@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://digital-esala-thorana.vercel.app/sitemap.xml

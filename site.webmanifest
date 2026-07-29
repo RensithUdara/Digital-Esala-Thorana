@@ -1,0 +1,19 @@
+{
+  "name": "Digital Esala Thorana",
+  "short_name": "Esala Thorana",
+  "description": "Interactive Sinhala digital Vesak and Esala thorana based on the Vessantara Jataka story.",
+  "lang": "si-LK",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#010103",
+  "theme_color": "#05060b",
+  "icons": [
+    {
+      "src": "/assets/images/b.png",
+      "sizes": "740x740",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
