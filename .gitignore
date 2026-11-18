@@ -68,4 +68,4 @@ node_modules/
 .dataconnect
 
 .vercel
-config.bat
+.env
